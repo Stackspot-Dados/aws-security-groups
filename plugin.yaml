@@ -1,5 +1,5 @@
 name: aws-security-groups
-description: Plugin para criação de security-groups
+description: Plugin para criação de security-groups.
 display-name: aws-security-groups
 picture: plugin.png
 category: backend # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#category
@@ -13,19 +13,122 @@ implementation: docs/implementation.md
 technologies: # Ref: https://docs.stackspot.com/latest/docs/creators-guide/yaml/#technologies
   - "Api"
 types:
-  - app
+  - env
 inputs:
-  - label: Input Example
+  - label: Digite um nome para o Security Group
     type: text
-    name: example
-    default: any text
-  - label: Example of number
+    name: security_group_name
+
+  - label: Digite uma descrição para o Security Group
+    type: text
+    name: description_security_group
+
+  # Regras de entrada
+
+  - label: Digite uma descrição para uma regra de entrada
+    type: text
+    name: description_ingress
+
+  - label: Digite a Porta Inicial
     type: int
-    name: any_number
-    default: "10"
-  - label: Example of list
-    type: multiselect
-    name: any_list
-    items:
-      - item1
-      - item2
+    name: from_port_ingress
+
+  - label: Digite a Porta de Intervalo Final
+    type: int
+    name: to_port_ingress
+
+  - label: Digite o Protocolo de Entrada
+    type: text
+    name: protocol_ingress
+
+  - label: Deseja que este grupo de segurança seja adicionado como uma origem a essa regra de entrada?
+    type: bool
+    name: self_ingress
+
+  - label: Deseja adicionar uma Lista de blocos CIDR?
+    type: bool
+    name: cidr_blocks_ingress
+    default: "false"
+
+  - label: Lista de blocos CIDR
+    name: cidr_ingress
+    type: text
+    condiction:
+      variable: cidr_blocks_ingress
+      operator: "=="
+      value: true
+
+  - label: Deseja adicionar uma Lista de blocos CIDR IPv6?
+    type: bool
+    name: ipv6_cidr_blocks_ingress
+    default: "false"
+
+  - label: Lista de blocos CIDR IPv6
+    name: cidr_ipv6_ingress
+    type: text
+    condiction:
+      variable: ipv6_cidr_blocks_ingress
+      operator: "=="
+      value: true
+
+  # Regras de saída
+
+  - label: Digite uma descrição para uma regra de saída
+    type: text
+    name: description_egress
+
+  - label: Digite a Porta Inicial
+    type: int
+    name: from_port_egress
+
+  - label: Digite a Porta de Intervalo Final
+    type: int
+    name: to_port_egress
+
+  - label: Digite o Protocolo de Saída
+    type: text
+    name: protocol_egress
+
+  - label: Deseja que este grupo de segurança seja adicionado como uma origem a essa regra de saída?
+    type: bool
+    name: self_egress
+
+  - label: Deseja adicionar uma Lista de blocos CIDR?
+    type: bool
+    name: cidr_blocks_egress
+    default: "false"
+
+  - label: Lista de blocos CIDR
+    name: cidr_egress
+    type: text
+    condiction:
+      variable: cidr_blocks_egress
+      operator: "=="
+      value: true
+
+  - label: Deseja adicionar uma Lista de blocos CIDR IPv6?
+    type: bool
+    name: ipv6_cidr_blocks_egress
+    default: "false"
+
+  - label: Lista de blocos CIDR IPv6
+    name: cidr_ipv6_egress
+    type: text
+    condiction:
+      variable: ipv6_cidr_blocks_egress
+      operator: "=="
+      value: true
+
+# Tags
+
+  - label: Deseja adicionar tags para atribuir a este recurso?
+    type: bool
+    name: name_tags
+
+  - label: Digite as tags 
+    name: mapa_tags
+    type: text
+    condiction:
+      variable: name_tags
+      operator: "=="
+      value: true
